@@ -1,45 +1,82 @@
 
 # Rapport
 
-Skapade en button i MainActivity. 
+Först skapades en knapp i `MainActivity`. Sedan skapades en `SecondActivity`. Sedan tillbaka i MainActivity
+skapades en klickbar knapp med funktionen `onClickner()`, så när man trycker på knappen i `MainActivity` 
+kommer man till `SecondActivity`.
 
+Därefter skapades en textEditor `EditText` i `SecondActivity` och en knapp `Button` i `SecondActivity`
+med funktionen `onClickner()` så att man kommer tillbaka till `MainActivity`. 
 
-**Skriv din rapport här!**
+## In MainActivity: Read data from Shared Preferences
 
-_Du kan ta bort all text som finns sedan tidigare_.
+Deklarede två nya variabler i `MainActivity` för att skapa `SharedPreferenses`.
 
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+Kod:
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+private SharedPreferences myPreferenceRef;
+private SharedPreferences.Editor myPreferenceEditor;
+
+```
+
+Kod som lades till i `ActivityMain`, `onCreate`: 
+
+```
+   myPreferenceRef = getPreferences(MODE_PRIVATE);
+   myPreferenceEditor = myPreferenceRef.edit();
+```
+
+od som lades till i `ActivityMain`, `onCreate` för att läsa en preference:
+
+```
+   TextView prefTextRef= findViewById(R.id.textView);
+   prefTextRef.setText(myPreferenceRef.getString("key", "No preference found."));
+   Skapade ny funktinen onResume
+
+```
+
+Kod som lades till i `MainActivity` för att läsa, visas i en preference från `SecondActivity` utan att 
+gå tillbaka till `onCreate`. 
+```
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView sharedPrefData = findViewById(R.id.textView);
+        sharedPrefData.setText(myPreferenceRef.getString("key", "Name"));
     }
-}
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+Lade till `<string name="save">Save</string>` i `String.xml`.
 
-![](android.png)
+## In SecondActivity: Write data to Shared Preferences using EditText
 
-Läs gärna:
+Deklarede två nya variabler i `SecondActivity` för att skapa `SharedPreferenses`.
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+Kod:
+
+```
+  private SharedPreferences myPreferenceRef;
+  private SharedPreferences.Editor myPreferenceEditor;
+
+```
+Skapade referens till `preference object` genom att lägga till koden:
+
+```
+  myPreferenceRef = getPreferences(MODE_PRIVATE);
+  myPreferenceEditor = myPreferenceRef.edit();
+
+```
+
+Sedan för att läsa in `preferences` från `EditText` lades kod till: 
+
+```
+  EditText prefTextRef = findViewById(R.id.editText);
+  prefTextRef.setText(myPreferenceRef.getString("key", "Name:"));
+```
+
+
+![](Screenshot_20230505_165822.png)
+
+![](Screenshot_20230505_170119.png)
+
