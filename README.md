@@ -27,7 +27,7 @@ Kod som lades till i `ActivityMain`, `onCreate`:
    myPreferenceEditor = myPreferenceRef.edit();
 ```
 
-od som lades till i `ActivityMain`, `onCreate` för att läsa en preference:
+Kod som lades till i `ActivityMain`, `onCreate` för att läsa en preference:
 
 ```
    TextView prefTextRef= findViewById(R.id.textView);
